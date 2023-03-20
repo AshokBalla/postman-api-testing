@@ -1,0 +1,101 @@
+{
+  "info": {
+    "name": "JSONPlaceholder API Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Posts",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{authToken}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/posts", "host": ["{{baseUrl}}"], "path": ["posts"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "var schema = {\n  'type': 'array',\n  'items': {\n    'type': 'object',\n    'required': ['userId','id','title','body'],\n    'properties': {\n      'userId': {'type':'number'},\n      'id': {'type':'number'},\n      'title': {'type':'string'},\n      'body': {'type':'string'}\n    }\n  }\n};",
+              "pm.test('Response schema is an array of posts', function () { pm.response.to.have.jsonSchema(schema); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Post by ID",
+      "request": {
+        "method": "GET",
+        "header": [ { "key": "Authorization", "value": "Bearer {{authToken}}" } ],
+        "url": { "raw": "{{baseUrl}}/posts/{{postId}}", "host": ["{{baseUrl}}"], "path": ["posts","{{postId}}"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Post has expected properties', function () { var json = pm.response.json(); pm.expect(json).to.have.property('id'); pm.expect(json).to.have.property('title'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Create Post (POST)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{authToken}}" }
+        ],
+        "body": { "mode": "raw", "raw": "{\"title\": \"foo\", \"body\": \"bar\", \"userId\": 1}" },
+        "url": { "raw": "{{baseUrl}}/posts", "host": ["{{baseUrl}}"], "path": ["posts"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status code is 201', function () { pm.response.to.have.status(201); });",
+              "pm.test('Response contains id', function () { var json = pm.response.json(); pm.expect(json).to.have.property('id'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Invalid Endpoint (error case)",
+      "request": {
+        "method": "GET",
+        "header": [ { "key": "Authorization", "value": "Bearer {{authToken}}" } ],
+        "url": { "raw": "{{baseUrl}}/posts/invalid-route", "host": ["{{baseUrl}}"], "path": ["posts","invalid-route"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Expect non-200 for invalid endpoint', function () { pm.expect(pm.response.code).to.not.equal(200); });",
+              "pm.test('Invalid endpoint returns 404', function () { pm.expect([404,400,422]).to.include(pm.response.code); });"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "exec": [
+          "// Simulate auth token generation\nvar token = 'demo-token-' + Math.random().toString(36).substring(2);\npm.environment.set('authToken', token);\nconsole.log('Auth token set: ' + token);"
+        ]
+      }
+    }
+  ]
+}
