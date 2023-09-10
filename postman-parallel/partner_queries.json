@@ -1,0 +1,1139 @@
+{
+	"info": {
+		"_postman_id": "524f2d58-a567-4215-912c-3d07a322301d",
+		"name": "Partner_Queries",
+		"description": "This is where we are currently testing our partner stacks graphql api.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30727619"
+	},
+	"item": [
+		{
+			"name": "Partner Queries",
+			"item": [
+				{
+					"name": "invoices(...): Invoices",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"invoices\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"items\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key_partner}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query MyQuery {\r\n  invoices(direction: FORWARD, limit: 10, offset: \"\", offset_id: \"\") {\r\n    items {\r\n      account_code\r\n      api_key\r\n      created_date\r\n      currency\r\n      due_by\r\n      fee_mode\r\n      invoice_amount\r\n      invoice_date\r\n      invoice_description\r\n      invoice_id\r\n      invoice_name\r\n      merchant_invoice_number\r\n      merchant_uid\r\n      reference\r\n      status\r\n      total_paid_amount\r\n      settings {\r\n        accepted_payment_methods {\r\n          ach\r\n          card\r\n          cash\r\n        }\r\n      }\r\n    }\r\n    total_row_count\r\n  }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "paymentMethodTokens(...): PaymentMethodTokensWithQuery Query List Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"paymentMethodTokens\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"total_row_count\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"items\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key_partner}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query MyQuery {\r\n  paymentMethodTokens(direction: FORWARD, limit: 10, offset: \"\", offset_id: \"\", query: {query_list: {key: \"merchant_uid\", value: \"{{merchant_uid}}\", operator: EQUAL}}) {\r\n    total_row_count\r\n    items {\r\n      address_line1\r\n      address_line2\r\n      card_brand\r\n      city\r\n      country\r\n      exp_date\r\n      full_name\r\n      is_active\r\n      last_four\r\n      merchant_uid\r\n      payment_method_id\r\n      payment_type\r\n      postal_code\r\n      region\r\n    }\r\n  }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "payors(...)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"payors\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"items\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key_partner}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query MyQuery {\r\n  payors(direction: FORWARD, limit: 10, offset: \"\", offset_id: \"\") {\r\n    items {\r\n        payor_id\r\n        merchant_uid\r\n        full_name\r\n        address_line1\r\n        address_line2\r\n        country\r\n        region\r\n        city\r\n        postal_code\r\n        email\r\n        phone\r\n    }\r\n    total_row_count\r\n  }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recurringPayments(...): RecurringPaymentsWithQuery Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"recurringPayments\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"total_row_count\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"items\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key_partner}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query MyQuery {\r\n  recurringPayments(direction: FORWARD, limit: 10, offset: \"\", offset_id: \"\") {\r\n    total_row_count\r\n    items {\r\n      account_code\r\n      amount_per_payment\r\n      created_date\r\n      currency\r\n      fee_mode\r\n      fee_per_payment\r\n      is_active\r\n      is_processing\r\n      merchant_uid\r\n      prev_payment_date\r\n      recurring_description\r\n      recurring_id\r\n      recurring_name\r\n      reference\r\n      remaining_payments\r\n      status\r\n      total_amount_per_payment\r\n      mute_all_emails\r\n      next_payment_date\r\n      payment_interval\r\n      metadata\r\n    }\r\n  }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "serviceFeeAmount(...): ServiceFeeAmount Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"serviceFeeAmount\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"ach\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"card\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key_partner}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query MyQuery {\r\n  serviceFeeAmount(amount: 5000, merchant_uid: \"{{merchant_uid}}\") {\r\n    ach {\r\n      total\r\n      fee_limit_reached\r\n      fee\r\n      adjusted_total\r\n    }\r\n    card {\r\n      adjusted_total\r\n      fee\r\n      fee_limit_reached\r\n      total\r\n    }\r\n  }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "missedRecurringPaymentData(...): MissedRecurringPaymentData Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"missedRecurringPaymentData\");\r",
+									"    \r",
+									"   \r",
+									"});\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key_partner}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query MyQuery {\r\n  missedRecurringPaymentData(recurring_id: \"{{graphql_recurring_payment_id}}\") {\r\n    fee\r\n    number_of_payments_missed\r\n    total_amount_owed\r\n  }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "settlements(...): Settlements - Query List Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"settlements\");\r",
+									"    \r",
+									"   \r",
+									"});\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key_partner}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query MyQuery {\r\n  settlements(direction: FORWARD, limit: 10, offset: \"\", offset_id: \"\", query: {query_list: {conjunctive_operator: NONE_NEXT, key: \"gross_amount\", operator: GREATER_THAN, value: \"5000\"}}) {\r\n    total_row_count\r\n    items {\r\n      currency\r\n      gross_amount\r\n      merchant_uid\r\n      net_amount\r\n      settlement_batch\r\n      settlement_date\r\n      status\r\n      total_adjustments\r\n      total_fees\r\n      transaction_debit_count\r\n      transaction_dispute_count\r\n      transaction_reversal_count\r\n    }\r\n  }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "settlements(...): Settlements Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"settlements\");\r",
+									"    \r",
+									"   \r",
+									"});\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key_partner}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query MyQuery {\r\n  settlements(direction: FORWARD, limit: 10, offset: \"\", offset_id: \"\") {\r\n    total_row_count\r\n    items {\r\n      currency\r\n      gross_amount\r\n      merchant_uid\r\n      net_amount\r\n      settlement_batch\r\n      settlement_date\r\n      status\r\n      total_adjustments\r\n      total_fees\r\n      transaction_debit_count\r\n      transaction_dispute_count\r\n      transaction_reversal_count\r\n    }\r\n  }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "transactions(...): Transactions - Query List Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"transactions\");\r",
+									"    \r",
+									"   \r",
+									"});\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key_partner}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query MyQuery {\r\n  transactions(limit: 10, direction: FORWARD, offset: \"\", offset_id: \"\", query: {query_list: {conjunctive_operator: NONE_NEXT, key: \"status\", operator: EQUAL, value: \"SETTLED\"}}) {\r\n    total_row_count\r\n    items {\r\n      account_code\r\n      currency\r\n      device_id\r\n      failure_reasons\r\n      dispute_status\r\n      fee_mode\r\n      fees\r\n      gross_amount\r\n      is_settled\r\n      merchant_uid\r\n      metadata\r\n      net_amount\r\n      reference\r\n      refunded_amount\r\n      settlement_batch\r\n      status\r\n      timezone\r\n      transaction_date\r\n      transaction_id\r\n      transaction_type\r\n      refund_reason {\r\n        reason_code\r\n        reason_details\r\n      }\r\n    }\r\n  }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "transactions(...): Transactions - W Metadata Query Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"transactions\");\r",
+									"    \r",
+									"   \r",
+									"});\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key_partner}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query MyQuery {\r\n  transactions(limit: 10, direction: FORWARD, offset: \"\", offset_id: \"\", query: {}) {\r\n    total_row_count\r\n    items {\r\n      account_code\r\n      currency\r\n      device_id\r\n      failure_reasons\r\n      dispute_status\r\n      fee_mode\r\n      fees\r\n      gross_amount\r\n      is_settled\r\n      merchant_uid\r\n      metadata(query_list: {operator: EQUAL, value: \"123456\", conjunctive_operator: NONE_NEXT, key: \"PaymentCompany-account-code\"})\r\n      net_amount\r\n      reference\r\n      refunded_amount\r\n      settlement_batch\r\n      status\r\n      timezone\r\n      transaction_date\r\n      transaction_id\r\n      transaction_type\r\n      refund_reason {\r\n        reason_code\r\n        reason_details\r\n      }\r\n    }\r\n  }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "transactions(...): Transactions - W FULL INVOICE QUERY Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"transactions\");\r",
+									"   \r",
+									"    \r",
+									"   \r",
+									"});\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key_partner}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query MyQuery {\r\n  transactions(direction: FORWARD, limit: 10, offset: \"\", offset_id: \"\", query: {}) {\r\n    items {\r\n      account_code\r\n      currency\r\n      device_id\r\n      dispute_status\r\n      failure_reasons\r\n      fee_mode\r\n      fees\r\n      gross_amount\r\n      invoice {\r\n        account_code\r\n        api_key\r\n        created_date\r\n        currency\r\n        due_by\r\n        fee_mode\r\n        invoice_amount\r\n        invoice_date\r\n        invoice_description\r\n        invoice_id\r\n        invoice_name\r\n        merchant_invoice_number\r\n        merchant_uid\r\n        offline_transactions {\r\n          amount\r\n          instance_id\r\n          invoice_id\r\n          note\r\n          transaction_date\r\n          type\r\n        }\r\n        payor {\r\n          address_line1\r\n          address_line2\r\n          city\r\n          country\r\n          email\r\n          full_name\r\n          merchant_uid\r\n          payor_id\r\n          phone\r\n          postal_code\r\n          region\r\n        }\r\n        reference\r\n        settings {\r\n          accepted_payment_methods {\r\n            ach\r\n            card\r\n            cash\r\n          }\r\n        }\r\n        status\r\n        total_paid_amount\r\n      }\r\n      is_settled\r\n      merchant_uid\r\n      net_amount\r\n      reference\r\n      refund_voidable\r\n      refunded_amount\r\n      settlement_batch\r\n      status\r\n      timezone\r\n      transaction_date\r\n      transaction_id\r\n      transaction_type\r\n    }\r\n    total_row_count\r\n  }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "disputes(...): [Dispute] Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"disputes\");\r",
+									"    \r",
+									"   \r",
+									"});\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key_partner}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query MyQuery {\r\n  disputes(direction: FORWARD, limit: 10, offset: \"\", offset_id: \"\", query: {}) {\r\n    items {\r\n      amount\r\n      dispute_date\r\n      dispute_id\r\n      evidence_last_send_date\r\n      expiration_date\r\n      merchant_uid\r\n      reason\r\n      reason_message\r\n      settlement_deposit_batch\r\n      settlement_withdrawal_batch\r\n      status\r\n      updated_date\r\n    }\r\n    total_row_count\r\n  }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "devices(...): Devices Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"devices\");\r",
+									"    \r",
+									"   \r",
+									"});\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key_partner}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query MyQuery {\r\n  devices(direction: FORWARD, limit: 10, offset: \"\", offset_id: \"\") {\r\n    total_row_count\r\n    items {\r\n      device_description\r\n      device_id\r\n      device_name\r\n      is_active\r\n      merchant_uid\r\n    }\r\n  }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "paymentLinks(...): PaymentLinks Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key_partner}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query MyQuery {\r\n  paymentLinks(direction: FORWARD, limit: 10, offset: \"\", offset_id: \"\") {\r\n    total_row_count\r\n    items {\r\n      accepted_payment_methods\r\n      account_code\r\n      amount\r\n      amount_is_variable\r\n      call_to_action\r\n      created_date\r\n      currency\r\n      custom_success_message\r\n      fee_mode\r\n      is_active\r\n      link_id\r\n      link_name\r\n      link_url\r\n      max_amount\r\n      merchant_uid\r\n      min_amount\r\n      payment_description\r\n      payment_name\r\n      redirect_url\r\n      require_phone\r\n    }\r\n  }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "service Fee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Get the full response body",
+									"",
+									"jsonData = pm.response.json();",
+									"dataone = jsonData.data",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key_partner}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query ServiceFee {\r\n  serviceFee(amount: 1000, merchant_uid: \"{{merchant_uid}}\", bank_id: \"\", is_ach: false) {\r\n    adjusted_total\r\n    fee: \r\n    fee_limit_reached\r\n    total\r\n  }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Updatefematrics",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Get the full response body",
+									"",
+									"jsonData = pm.response.json();",
+									"dataone = jsonData.data",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key_partner}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation UpdateFeeMatrix {\r\n  updateFeeMatrix(fee_matrix: {\r\n        merchant_uid: \"{{merchant_uid}}\", \r\n        ach: {\r\n            merchant_fee: {\r\n                basis_points: 40,\r\n                fixed: 40,\r\n                max_fee: 800\r\n            },\r\n            service_fee: {\r\n                basis_points: 40,\r\n                fixed: 40,\r\n                max_fee: 800,\r\n                min_fee: 0\r\n            }\r\n        },\r\n        ach_return_fee: 500,\r\n        ach_return_disputed_fee: 1500,\r\n        amex: null,\r\n        business_credit: null,\r\n        business_debit: null,\r\n        card: {\r\n            merchant_fee: {\r\n                basis_points: 200,\r\n                fixed: 30\r\n            },\r\n            service_fee: {\r\n                basis_points: 300,\r\n                fixed: 0,\r\n                min_fee: 195\r\n            }\r\n        },\r\n        card_account_updater: 30,\r\n        cash: 250,\r\n        chargeback_fee: 2000,\r\n        credit_card: null,\r\n        debit_card: null,\r\n        discover: null,\r\n        interchange_plus: false,\r\n        international_card_basis: 100,\r\n        mastercard: null,\r\n        prepaid_card: null,\r\n        service_fee_enabled: true,\r\n        visa: null\r\n    }) {\r\n    ach_return_fee\r\n  }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "qa_merchant_uid",
+			"value": "104b4c75-4e0d-4912-b6d7-78cc34e31c60",
+			"type": "string"
+		},
+		{
+			"key": "qa_payor_full_name",
+			"value": "Abel Collins",
+			"type": "string"
+		},
+		{
+			"key": "qa_payor_address_line1",
+			"value": "123 Testing Lane",
+			"type": "string"
+		},
+		{
+			"key": "qa_payor_address_line2",
+			"value": "Apt 29",
+			"type": "string"
+		},
+		{
+			"key": "qa_payor_city",
+			"value": "Cincinnati",
+			"type": "string"
+		},
+		{
+			"key": "qa_payor_country",
+			"value": "USA",
+			"type": "string"
+		},
+		{
+			"key": "qa_payor_email",
+			"value": "abel@PaymentCompany.com",
+			"type": "string"
+		},
+		{
+			"key": "qa_payor_phone",
+			"value": "5135555555",
+			"type": "string"
+		},
+		{
+			"key": "qa_payor_postal_code",
+			"value": "12345",
+			"type": "string"
+		},
+		{
+			"key": "qa_payor_region",
+			"value": "OH",
+			"type": "string"
+		},
+		{
+			"key": "qa_payment_method_id",
+			"value": "ptl_pmt_6VkNsqQ3nJH0Fz50lvedoz (evolve lab)",
+			"type": "string"
+		},
+		{
+			"key": "qa_account_code",
+			"value": "123456",
+			"type": "string"
+		},
+		{
+			"key": "qa_merchant_fee_mode",
+			"value": "MERCHANT_FEE",
+			"type": "string"
+		},
+		{
+			"key": "qa_service_fee_mode",
+			"value": "SERVICE_FEE",
+			"type": "string"
+		},
+		{
+			"key": "qa_receipt_description",
+			"value": "Testing Graphql API",
+			"type": "string"
+		},
+		{
+			"key": "qa_reference",
+			"value": "Test Ref 123",
+			"type": "string"
+		},
+		{
+			"key": "qa_send_receipt",
+			"value": "true",
+			"type": "string"
+		},
+		{
+			"key": "qa_metadata",
+			"value": "{\\\"newmetadata\\\":\\\"test\\\"}",
+			"type": "string"
+		},
+		{
+			"key": "status",
+			"value": ""
+		},
+		{
+			"key": "stage",
+			"value": "carpe"
+		}
+	]
+}

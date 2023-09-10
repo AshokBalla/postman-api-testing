@@ -1,0 +1,2166 @@
+{
+	"info": {
+		"_postman_id": "a2246c05-b816-4147-8949-d8b0552a57c7",
+		"name": "Merchant_Mutations",
+		"description": "This is where we are currently testing our partner stacks graphql api.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30727619"
+	},
+	"item": [
+		{
+			"name": "Merchant Mutations",
+			"item": [
+				{
+					"name": "createPaymentMethod(...): PaymentMethodToken (ACH)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createPaymentMethod\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\r\n  createPaymentMethod(\r\n    merchant_uid: \"{{merchant_uid}}\"\r\n    payment_method: {\r\n      ach: {\r\n        account_type: BUSINESS_CHECKING\r\n        address_line1: \"1235 Testing Ave\"\r\n        account_number: \"789456124\"\r\n        address_line2: \"Apt 6\"\r\n        city: \"Columbus\"\r\n        country: \"USA\"\r\n        name_on_account: \"Jim Smith\"\r\n        postal_code: \"12345\"\r\n        region: \"OH\"\r\n        routing_number: \"021000021\"\r\n      }\r\n      payor: {\r\n        address_line1: \"123 Testing Ave\"\r\n        address_line2: \"Apt 2\"\r\n        city: \"Cincinnati\"\r\n        country: \"USA\"\r\n        email: \"ashok@PaymentCompany.com\"\r\n        full_name: \"Ashok Balla\"\r\n        merchant_uid: \"{{merchant_uid}}\"\r\n        postal_code: \"45140\"\r\n        region: \"OH\"\r\n        phone: \"5172079431\"\r\n      }\r\n    }\r\n  ) {\r\n    address_line1\r\n    address_line2\r\n    card_brand\r\n    city\r\n    country\r\n    exp_date\r\n    full_name\r\n    is_active\r\n    last_four\r\n    merchant_uid\r\n    payment_method_id\r\n    payment_type\r\n    postal_code\r\n    region\r\n    wallet_type\r\n    payor {\r\n      address_line1\r\n      address_line2\r\n      city\r\n      country\r\n      email\r\n      full_name\r\n      phone\r\n      postal_code\r\n      region\r\n      payor_id\r\n      merchant_uid\r\n    }\r\n  }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createPaymentMethod(...): PaymentMethodToken (CARD)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createPaymentMethod\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);\r",
+									"\r",
+									"// Get the created payment method id from this test response\r",
+									"created_payment_method_id = jsonData.data.createPaymentMethod.payment_method_id\r",
+									"\r",
+									"// Set the new created_payment_method_id to the global varaible graphql_payment_method_id\r",
+									"pm.globals.set(\"graphql_payment_method_id\", created_payment_method_id);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\r\n    createPaymentMethod(\r\n    merchant_uid: \"{{merchant_uid}}\"\r\n    payment_method: {\r\n      card: {\r\n        address_line1: \"1235 Testing Ave\"\r\n        address_line2: \"Apt 6\"\r\n        city: \"Columbus\"\r\n        country: \"USA\"\r\n        postal_code: \"12345\"\r\n        region: \"OH\"\r\n        card_number: \"5454545454545454\"\r\n        full_name: \"Ashok Balla\"\r\n        security_code: \"123\"\r\n        exp_date: { month: \"01\", year: \"2045\" }\r\n      }\r\n      payor: {\r\n        address_line1: \"123 Testing Ave\"\r\n        address_line2: \"Apt 2\"\r\n        city: \"Cincinnati\"\r\n        country: \"USA\"\r\n        email: \"ashok@PaymentCompany.com\"\r\n        full_name: \"Ashok Balla\"\r\n        merchant_uid: \"{{merchant_uid}}\"\r\n        postal_code: \"45140\"\r\n        region: \"OH\"\r\n        phone: \"5172079431\"\r\n      }\r\n    }\r\n  ) {\r\n    address_line1\r\n    address_line2\r\n    card_brand\r\n    city\r\n    country\r\n    exp_date\r\n    full_name\r\n    is_active\r\n    last_four\r\n    merchant_uid\r\n    payment_method_id\r\n    payment_type\r\n    postal_code\r\n    region\r\n    wallet_type\r\n    payor {\r\n      address_line1\r\n      address_line2\r\n      city\r\n      country\r\n      email\r\n      full_name\r\n      phone\r\n      postal_code\r\n      region\r\n      payor_id\r\n      merchant_uid\r\n    }\r\n  }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createOneTimePayment(...): OneTimePayment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createOneTimePayment\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);\r",
+									"\r",
+									"\r",
+									"created_transaction_id_one = jsonData.data.createOneTimePayment.transaction_id\r",
+									"\r",
+									"pm.globals.set(\"graphql_transaction_id_one\",created_transaction_id_one);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\r\n  createOneTimePayment(amount: 100, \r\n          merchant_uid: \"{{merchant_uid}}\", \r\n          payment_method_id: \"{{graphql_payment_method_id}}\", \r\n          account_code: \"123456\", \r\n          fee_mode: MERCHANT_FEE,\r\n          receipt_description: \"Testing Graphql Api createOneTimePayment\",\r\n          reference: \"Test reference value\", \r\n          send_receipt: true,\r\n          metadata: \"{\\\"newmetadata\\\":\\\"test\\\"}\"\r\n          ) {\r\n    amount\r\n    card_brand\r\n    created_at\r\n    currency\r\n    last_four\r\n    service_fee\r\n    status\r\n    transaction_id\r\n    failure_reason\r\n  }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createOneTimePayment(...): OneTimePayment Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createOneTimePayment\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\r\n  createOneTimePayment(amount: 1000, \r\n          merchant_uid: \"{{merchant_uid}}\", \r\n          payment_method_id: \"{{graphql_payment_method_id}}\", \r\n          account_code: \"123456\", \r\n          fee_mode: SERVICE_FEE,\r\n          fee: 195,\r\n          receipt_description: \"Testing Graphql Api createOneTimePayment\",\r\n          reference: \"Test reference value\", \r\n          send_receipt: true,\r\n          metadata: \"{\\\"newmetadata\\\":\\\"test\\\"}\"\r\n          ) {\r\n    amount\r\n    card_brand\r\n    created_at\r\n    currency\r\n    last_four\r\n    service_fee\r\n    status\r\n    transaction_id\r\n    failure_reason\r\n  }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createTransaction(...):",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createTransaction\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);\r",
+									"\r",
+									"created_transaction_id_two = jsonData.data.createTransaction.transaction_id\r",
+									"\r",
+									"pm.globals.set(\"graphql_transaction_id_two\",created_transaction_id_two);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n  createTransaction(amount: 100, \r\n          merchant_uid: \"{{merchant_uid}}\", \r\n        #   payment_method_id: String, \r\n   payment_method: {\r\n      card: {\r\n         address_line1: \"123 billing ave\",\r\n         address_line2: \"apt 1\",\r\n         card_number: \"5454545454545454\",\r\n         city: \"cincinnati\",\r\n         exp_date: {\r\n            month: \"05\",\r\n            year: \"30\"\r\n         },\r\n         country: \"USA\",\r\n         region: \"ohio\",\r\n         postal_code: \"12345\",\r\n         full_name: \"ashok balla\",\r\n         security_code: \"123\"\r\n      },\r\n   },\r\n          account_code: \"123456\", \r\n          fee_mode: MERCHANT_FEE,\r\n        #   fee\r\n        #   invoice_id: String, \r\n        #   recurring_id: String, \r\n          reference: \"Test reference value\", \r\n          send_receipt: true,\r\n          metadata: \"{\\\"newmetadata\\\":\\\"test\\\"}\"\r\n          ) {\r\n      account_code\r\n      currency\r\n      dispute_status\r\n      failure_reasons\r\n      fee_mode\r\n      fees\r\n      gross_amount\r\n      is_settled\r\n      merchant_uid\r\n      metadata\r\n      net_amount\r\n      parent_id\r\n      payment_method {\r\n          payment_method_id\r\n          payor {\r\n              payor_id\r\n          }\r\n      }\r\n      recurring {\r\n          recurring_id\r\n      }\r\n      reference\r\n    #   refund_reason {\r\n    #       reason_code\r\n    #       reason_details\r\n    #       transfer_type\r\n    #   }\r\n      refunded_amount\r\n      settlement_batch\r\n      status\r\n      timezone\r\n      transaction_date\r\n      transaction_id\r\n      transaction_type\r\n  }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createRecurringPayment(...): RecurringPayment Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createRecurringPayment\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);\r",
+									"\r",
+									"// Get the created recurring id from this test response\r",
+									"created_recurring_payment = jsonData.data.createRecurringPayment.recurring_id\r",
+									"\r",
+									"// Set the new recurring id to the global varaible graphql_recurring_payment_id\r",
+									"pm.globals.set(\"graphql_recurring_payment_id\",created_recurring_payment);\r",
+									"\r",
+									"create_prev_payment_date = jsonData.data.createRecurringPayment.prev_payment_date\r",
+									"\r",
+									"pm.globals.set(\"graphql_prev_payment_date\",create_prev_payment_date);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\r\n  createRecurringPayment(\r\n    input: {\r\n      account_code: \"123456\"\r\n      amount: 10000\r\n      fee_mode: MERCHANT_FEE\r\n      merchant_uid: \"{{merchant_uid}}\"\r\n      metadata: \"{\\\"newmetadata\\\":\\\"test\\\"}\"\r\n      payment_count: 99\r\n      payment_interval: WEEKLY\r\n      payment_method_id: \"{{graphql_payment_method_id}}\"\r\n      recurring_description: \"Test Recurring Via Api\"\r\n      recurring_name: \"Test Recurring Name\"\r\n      reference: \"123456\"\r\n      mute_all_emails: false\r\n      payor: {\r\n        address_line1: \"123 Testing Lane\"\r\n        address_line2: \"Apt 4\"\r\n        city: \"Cincinnati\"\r\n        country: \"USA\"\r\n        email: \"ashok@PaymentCompany.comm\"\r\n        full_name: \"Ashok Balla\"\r\n        merchant_uid: \"{{merchant_uid}}\"\r\n        phone: \"5131231234\"\r\n        postal_code: \"12345\"\r\n        region: \"OH\"\r\n      }\r\n    }\r\n  ) {\r\n    total_amount_per_payment\r\n    status\r\n    remaining_payments\r\n    reference\r\n    recurring_name\r\n    recurring_id\r\n    recurring_description\r\n    prev_payment_date\r\n    payment_interval\r\n    next_payment_date\r\n    mute_all_emails\r\n    metadata\r\n    merchant_uid\r\n    is_processing\r\n    is_active\r\n    fee_per_payment\r\n    fee_mode\r\n    currency\r\n    created_date\r\n    amount_per_payment\r\n    account_code\r\n    payment_method {\r\n      address_line1\r\n      address_line2\r\n      card_brand\r\n      city\r\n      country\r\n      exp_date\r\n      full_name\r\n      is_active\r\n      last_four\r\n      merchant_uid\r\n      payment_method_id\r\n      payment_type\r\n      postal_code\r\n      region\r\n    }\r\n    payor {\r\n      address_line1\r\n      address_line2\r\n      city\r\n      country\r\n      email\r\n      full_name\r\n      merchant_uid\r\n      payor_id\r\n      phone\r\n      postal_code\r\n      region\r\n    }\r\n  }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateRecurringPayment(...): RecurringPayment Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"updateRecurringPayment\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\r\n  updateRecurringPayment(input: {mute_all_emails: false, pay_all_missed_payments: false, payment_method_id: \"{{graphql_payment_method_id}}\", recurring_id: \"{{graphql_recurring_payment_id}}\"}) {\r\n    account_code\r\n    amount_per_payment\r\n    created_date\r\n    currency\r\n    fee_mode\r\n    fee_per_payment\r\n    is_active\r\n    is_processing\r\n    merchant_uid\r\n    metadata\r\n    mute_all_emails\r\n    next_payment_date\r\n    payment_interval\r\n    payment_method {\r\n      address_line1\r\n      card_brand\r\n      address_line2\r\n      city\r\n      country\r\n      is_active\r\n      full_name\r\n      exp_date\r\n      last_four\r\n      merchant_uid\r\n      payment_method_id\r\n      payment_type\r\n      postal_code\r\n      region\r\n    }\r\n    prev_payment_date\r\n    recurring_description\r\n    recurring_id\r\n    recurring_name\r\n    reference\r\n    remaining_payments\r\n    status\r\n    total_amount_per_payment\r\n    payor {\r\n      address_line1\r\n      address_line2\r\n      city\r\n      country\r\n      email\r\n      full_name\r\n      merchant_uid\r\n      payor_id\r\n      phone\r\n      postal_code\r\n      region\r\n    }\r\n  }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"users\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"You do not have permission to query users\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query MyQuery {\r\n    users(user_pool: MERCHANT, merchant_uid: \"{{merchant_uid}}\") {\r\n        username\r\n        email\r\n        user_status\r\n        full_name\r\n        phone\r\n    }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createUser\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"You do not have permission to create users\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\r\n    createUser(input: { email: \"ashok@PaymentCompany.com\", \r\n                    first_name: \"TEST\",\r\n                    last_name: \"USER\", \r\n                    merchant_uid: \"{{merchant_uid}}\", \r\n                    phone: \"1-859-957-8594\", \r\n                    user_pool: MERCHANT\r\n                }) {\r\n    email\r\n    full_name\r\n    phone\r\n    user_status\r\n    username\r\n  }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"deleteUser\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n  deleteUser(username: \"ashok@PaymentCompany.com\", user_pool: MERCHANT) \r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateMetadata(...): Boolean",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"updateMetadata\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\r\n  updateMetadata(id: \"{{graphql_transaction_id}}\", merchant_uid: \"{{merchant_uid}}\", metadata: \"{\\\"updated_metadata\\\":\\\"12345\\\"}\", metadata_associate: TRANSACTION)\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteMetadata(...): Boolean",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"deleteMetadata\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\r\n  deleteMetadata(id: \"{{graphql_transaction_id}}\", merchant_uid: \"{{merchant_uid}}\", metadata_associate: TRANSACTION, metadata_keys: \"updated_metadata\")\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createPaymentLink(...): PaymentLink - W Redirect Link",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createPaymentLink\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);\r",
+									"\r",
+									"\r",
+									"// Get the created payment link id from this test response\r",
+									"created_link_id = jsonData.data.createPaymentLink.link_id\r",
+									"\r",
+									"// Set the new created_link_id to the global varaible graphql_link_id\r",
+									"pm.globals.set(\"graphql_link_id\", created_link_id);\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\r\n  createPaymentLink(input: {require_phone: false, redirect_url: \"https://www.google.com/search?rlz=1C1CHBF_enUS1027US1027&sxsrf=APwXEdeiwutXGzPrUev99ItveJGYfClAxw:1681222282442&q=redirect&tbm=isch&sa=X&ved=2ahUKEwj7qruHgaL-AhXVJkQIHerwBfcQ0pQJegQIFhAB&biw=2558&bih=1359&dpr=1#imgrc=18bRmQQqVidVUM\", payment_description: \"Test Payment Link Description\", payment_name: \"Test Payment Name\", merchant_uid: \"{{merchant_uid}}\", link_name: \"Test Payment Link Name\", fee_mode: SERVICE_FEE, currency: \"USD\", call_to_action: PAY, amount_is_variable: false, amount: 15000, account_code: \"123456\", accepted_payment_methods: ALL}) {\r\n    require_phone\r\n    redirect_url\r\n    payment_name\r\n    payment_description\r\n    min_amount\r\n    max_amount\r\n    merchant_uid\r\n    link_url\r\n    link_name\r\n    link_id\r\n    fee_mode\r\n    is_active\r\n    custom_success_message\r\n    currency\r\n    created_date\r\n    call_to_action\r\n    amount_is_variable\r\n    amount\r\n    account_code\r\n    accepted_payment_methods\r\n  }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createPaymentLink(...): PaymentLink - W Custom Message Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createPaymentLink\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\r\n  createPaymentLink(input: {require_phone: false, custom_success_message: \"Test My Custom Message\", payment_description: \"Test Payment Link Description\", payment_name: \"Test Payment Name\", merchant_uid: \"{{merchant_uid}}\", link_name: \"Test Payment Link Name\", fee_mode: SERVICE_FEE, currency: \"USD\", call_to_action: PAY, amount_is_variable: false, amount: 20000, account_code: \"123456\", accepted_payment_methods: ALL}) {\r\n    require_phone\r\n    redirect_url\r\n    payment_name\r\n    payment_description\r\n    min_amount\r\n    max_amount\r\n    merchant_uid\r\n    link_url\r\n    link_name\r\n    link_id\r\n    fee_mode\r\n    is_active\r\n    custom_success_message\r\n    currency\r\n    created_date\r\n    call_to_action\r\n    amount_is_variable\r\n    amount\r\n    account_code\r\n    accepted_payment_methods\r\n  }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatePaymentLink(...): PaymentLink - Cancel Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"updatePaymentLink\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\r\n  updatePaymentLink(input: {merchant_uid: \"{{merchant_uid}}\", is_active: false, link_name: \"Test Updated Payment Link Name\", link_id: \"{{graphql_link_id}}\"}) {\r\n    require_phone\r\n    redirect_url\r\n    payment_name\r\n    payment_description\r\n    min_amount\r\n    merchant_uid\r\n    max_amount\r\n    link_url\r\n    link_name\r\n    link_id\r\n    is_active\r\n    fee_mode\r\n    custom_success_message\r\n    currency\r\n    created_date\r\n    call_to_action\r\n    amount_is_variable\r\n    amount\r\n    account_code\r\n    accepted_payment_methods\r\n  }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatePaymentLink(...): PaymentLink - W Updated names (failed)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"updatePaymentLink\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Redirect url and custom success message cannot both be set\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\r\n  updatePaymentLink(input: {require_phone: false, custom_success_message: \"Test My Updated Custom Message\", payment_description: \"Test Updated Payment Link Description\", payment_name: \"Test Updated Payment Name\", merchant_uid: \"{{merchant_uid}}\", is_active: true, link_name: \"Test Updated Payment Link Name\", link_id: \"{{graphql_link_id}}\", fee_mode: SERVICE_FEE, currency: \"USD\", call_to_action: PAY, amount_is_variable: false, amount: 25000, account_code: \"123456\", accepted_payment_methods: ALL}) {\r\n    require_phone\r\n    redirect_url\r\n    payment_name\r\n    payment_description\r\n    min_amount\r\n    merchant_uid\r\n    max_amount\r\n    link_url\r\n    link_name\r\n    link_id\r\n    is_active\r\n    fee_mode\r\n    custom_success_message\r\n    currency\r\n    created_date\r\n    call_to_action\r\n    amount_is_variable\r\n    amount\r\n    account_code\r\n    accepted_payment_methods\r\n  }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createPaymentLink(...): PaymentLink - Fail W Redirect and Custom Message Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createPaymentLink\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Redirect url and custom success message cannot both be set\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\r\n  createPaymentLink(input: {require_phone: false, redirect_url: \"https://www.google.com/search?rlz=1C1CHBF_enUS1027US1027&sxsrf=APwXEdeiwutXGzPrUev99ItveJGYfClAxw:1681222282442&q=redirect&tbm=isch&sa=X&ved=2ahUKEwj7qruHgaL-AhXVJkQIHerwBfcQ0pQJegQIFhAB&biw=2558&bih=1359&dpr=1#imgrc=18bRmQQqVidVUM\", payment_description: \"Test Payment Link Description\", payment_name: \"Test Payment Name\", merchant_uid: \"{{merchant_uid}}\", link_name: \"Test Payment Link Name\", fee_mode: SERVICE_FEE, custom_success_message: \"Test My Custom Message\", currency: \"USD\", call_to_action: PAY, amount_is_variable: false, amount: 15000, account_code: \"123456\", accepted_payment_methods: ALL}) {\r\n    require_phone\r\n    redirect_url\r\n    payment_name\r\n    payment_description\r\n    min_amount\r\n    max_amount\r\n    merchant_uid\r\n    link_url\r\n    link_name\r\n    link_id\r\n    fee_mode\r\n    is_active\r\n    custom_success_message\r\n    currency\r\n    created_date\r\n    call_to_action\r\n    amount_is_variable\r\n    amount\r\n    account_code\r\n    accepted_payment_methods\r\n  }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createUserPasswordReset(...): Boolean",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createUserPasswordReset\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"You do not have permission to delete users\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\r\n  createUserPasswordReset(user_pool: MERCHANT, username: \"0827750e-3f06-46b6-8e32-da3b646f0d89\")\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createRefund(...): Boolean Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createRefund\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\r\n  createRefund(amount: 1000, refund_reason: {reason_code: REQUESTED_BY_CUSTOMER, reason_details: \"Test Refund Via Api\"}, transaction_id: \"{{graphql_transaction_id_two}}\", refund_email: \"ashok@paythory.com\")\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createRefund(...): Boolean - Fail Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\r\n  createRefund(amount: 900000, refund_reason: {reason_code: REQUESTED_BY_CUSTOMER, reason_details: \"Test Refund Via Api\"}, transaction_id: \"{{graphql_transaction_id_two}}\", refund_email: \"ashok@paythory.com\")\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create receipt email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createReceiptEmail\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\r\n  createReceiptEmail(transaction_id: \"{{graphql_transaction_id_one}}\", email: \"ashok@PaymentCompany.com\", receipt_description: \"test\")\r\n}\r\n\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createMerchant(...): ListMerchant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createMerchant\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"You do not have permission to create a merchant\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n  createMerchant(merchant_name: \"Test Merchant\", \r\n                user: {\r\n                    email: \"ashok+newvalmerchant@PaymentCompany.com\", \r\n                    first_name: \"Ashok\", \r\n                    last_name: \"Balla\", \r\n                    phone: \"1-859-957-8597\"\r\n                }) {\r\n    ach_active\r\n    card_active\r\n    cash_active\r\n    merchant_name\r\n    merchant_uid\r\n    parent_merchant_uid\r\n    submitted_onboarding\r\n  }\r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get merchants",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"merchants\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query MyQuery {\r\n  merchants(direction: FORWARD, limit: 10, offset: \"\", offset_id: \"\", query: {}) {\r\n    items {\r\n      updated_row_at\r\n      submitted_onboarding\r\n      parent_merchant_uid\r\n      merchant_uid\r\n      merchant_name\r\n      is_system\r\n      cash_active\r\n      card_active\r\n      ach_active\r\n    }\r\n    total_row_count\r\n  }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createinvoices(...): Invoices",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);\r",
+									"\r",
+									"// Get the created invoice id from this test response\r",
+									"created_invoice_id = jsonData.data.createInvoice.invoice_id\r",
+									"\r",
+									"//Set the new created_invoice_id to the global varaible graphql_invoice_id\r",
+									"pm.globals.set(\"graphql_invoice_id\",created_invoice_id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\n  createInvoice(input: {currency: \"USD\", invoice_amount: 10, invoice_name: \"test\", merchant_uid: \"{{merchant_uid}}\", payor: {address_line1: \"1234 Testing Lane\", address_line2: \"Apt 5\", city: \"Cincinati\", country: \"USD\", email: \"ashok@PaymentCompany.com\", full_name: \"Ashok Balla\", region: \"Ohio\", postal_code: \"12345\"}}) {\n    account_code\n    api_key\n    created_date\n    currency\n    due_by\n    fee_mode\n    invoice_amount\n    invoice_description\n    invoice_id\n    invoice_date\n    invoice_name\n    merchant_uid\n    merchant_invoice_number\n    metadata\n    reference\n    status\n    total_paid_amount\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createInvoiceEmail(...)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createInvoiceEmail\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\r\n  createInvoiceEmail(invoice_id: \"{{graphql_invoice_id}}\")\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateInvoice(...)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"updateInvoice\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\r\n  updateInvoice(\r\n    invoice_id: \"{{graphql_invoice_id}}\"\r\n    invoice_update_input: {\r\n      account_code: \"123456\"\r\n      currency: \"USD\"\r\n      due_by: \"2023-12-08\"\r\n      fee_mode: MERCHANT_FEE\r\n      invoice_amount: 50000\r\n      invoice_date: \"2023-12-01\"\r\n      invoice_description: \"test updated invoice_description\"\r\n      invoice_name: \"Updated Invoice\"\r\n      reference: \"12345\"\r\n      send_email: true\r\n      settings: {\r\n        is_secure: false\r\n        require_payor_address: false\r\n        accepted_payment_methods: { ach: false, card: false, cash: false }\r\n      }\r\n    }\r\n  )\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteInvoice(...)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"deleteInvoice\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation MyMutation {\r\n  deleteInvoice(invoice_id: \"{{graphql_invoice_id}}\")\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createAuthorization(...)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createAuthorization\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);\r",
+									"\r",
+									"created_authorization_id = jsonData.data.createAuthorization.authorization_id\r",
+									"\r",
+									"pm.globals.set(\"graphql_authorization_id\",created_authorization_id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\r\n  createAuthorization(\r\n   amount: 10000,\r\n   merchant_uid: \"{{merchant_uid}}\",\r\n   account_code: \"12345\",\r\n#    fee: 10,\r\n   fee_mode: MERCHANT_FEE,\r\n   health_expense_type: CLINICAL,\r\n#    invoice_id: \"\",\r\n#    metadata: \"false\",\r\n   payment_method: {\r\n      card: {\r\n         address_line1: \"123 testing ave\",\r\n         address_line2: \"apt 1\",\r\n         card_number: \"5454545454545454\",\r\n         city: \"cincinnati\",\r\n         exp_date: {\r\n            month: \"05\",\r\n            year: \"39\"\r\n         },\r\n         country: \"USA\",\r\n         region: \"ohio\",\r\n         postal_code: \"12345\",\r\n         full_name: \"Ashok Balla\",\r\n         security_code: \"123\"\r\n      },\r\n    #   metadata: \"false\",\r\n      payor: {\r\n         address_line1: \"1234 testing payor ave\",\r\n         address_line2: \"apt 4\",\r\n         city: \"cincinnati\", \r\n         country: \"USA\",\r\n         full_name: \"ashok balla\",\r\n         email: \"ashok@PaymentCompany.com\",\r\n        #  merchant_uid: \"\",\r\n        #  metadata: \"false\",\r\n         phone: \"5172079431\",\r\n         postal_code: \"12345\",\r\n         region: \"ohio\"\r\n      },\r\n    #   payor_id: \"\"\r\n   },\r\n#    payment_method_id: \"\",\r\n   reference: \"12345\",\r\n#    sale_id: \"\"\r\n   )\r\n   {\r\n    updated_row_at\r\n    transaction_id\r\n    timezone\r\n    status\r\n    sale_id\r\n    metadata\r\n    merchant_uid\r\n    fees\r\n    fee_mode\r\n    failure_reasons\r\n    expiration_date\r\n    device_id\r\n    currency\r\n    captured_amount\r\n    authorization_id\r\n    amount\r\n    authorization_date\r\n    account_code\r\n    payment_method {\r\n      address_line1\r\n      address_line2\r\n      card_brand\r\n      city\r\n      exp_date\r\n      country\r\n      full_name\r\n      is_active\r\n      last_four\r\n      merchant_uid\r\n      metadata\r\n      payment_method_id\r\n      payment_type\r\n      postal_code\r\n      region\r\n    }\r\n    reference\r\n  }\r\n  \r\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "capture Authorization(...)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createCapture\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\r\n  createCapture(\r\n    amount: 10000\r\n    authorization_id: \"{{graphql_authorization_id}}\"\r\n    merchant_uid: \"{{merchant_uid}}\"\r\n    allow_exceeded_amount: false\r\n    # allow_reauth: false\r\n    # fee: 10\r\n    receipt_description: \"test capture\"\r\n    send_receipt: true\r\n  ) {\r\n    account_code\r\n    authorization_id\r\n    currency\r\n    device_id\r\n    dispute_status\r\n    failure_reasons\r\n    fee_mode\r\n    fees\r\n    gross_amount\r\n    is_settled\r\n    metadata\r\n    merchant_uid\r\n    net_amount\r\n    parent_id\r\n    reference\r\n    refund_voidable\r\n    refunded_amount\r\n    sale_id\r\n    settlement_batch\r\n    status\r\n    timezone\r\n    transaction_date\r\n    transaction_id\r\n    transaction_type\r\n    updated_row_at\r\n    payment_method {\r\n      address_line1\r\n      address_line2\r\n      card_brand\r\n      city\r\n      country\r\n      exp_date\r\n      full_name\r\n      is_active\r\n      last_four\r\n      merchant_uid\r\n      payment_method_id\r\n      payment_type\r\n      postal_code\r\n      region\r\n      wallet_type\r\n      payor {\r\n        address_line1\r\n        address_line2\r\n        city\r\n        country\r\n        full_name\r\n        merchant_uid\r\n        payor_id\r\n        phone\r\n        postal_code\r\n        region\r\n        email\r\n      }\r\n    }\r\n  }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createVoidForAuthorization()",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"createVoidForAuthorization\");\r",
+									"   \r",
+									"});\r",
+									"\r",
+									"\r",
+									"// Get the full response body\r",
+									"jsonData = pm.response.json();\r",
+									"dataone = jsonData.data\r",
+									"console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation MyMutation {\r\n  createVoidForAuthorization(authorization_id: \"{{graphql_authorization_id}}\", void_amount: 10000)\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatePaymentMethodToDisabled(...): this feature not avaible for testing",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// pm.test(\"Body matches string\", function () {\r",
+									"//     pm.expect(pm.response.text()).to.include(\"data\");\r",
+									"//     pm.expect(pm.response.text()).to.include(\"updatePaymentMethod\");\r",
+									"   \r",
+									"// });\r",
+									"\r",
+									"// // Get the full response body\r",
+									"// jsonData = pm.response.json();\r",
+									"// dataone = jsonData.data\r",
+									"// console.log(dataone);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{graphql_api_key}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/graphql",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "# mutation {\r\n#   updatePaymentMethodToDisabled(merchant_uid: \"{{merchant_uid}}\", payment_method_id:\"{{payment_method_id}}\")\r\n#    {\r\n#     address_line1\r\n#     address_line2\r\n#     card_brand\r\n#     city\r\n#     country\r\n#     exp_date\r\n#     full_name\r\n#     is_active\r\n#     last_four\r\n#     merchant_uid\r\n#     payment_method_id\r\n#     payment_type\r\n#     postal_code\r\n#     region\r\n#     wallet_type\r\n#     payor {\r\n#       address_line1\r\n#       address_line2\r\n#       city\r\n#       country\r\n#       email\r\n#       full_name\r\n#       phone\r\n#       postal_code\r\n#       region\r\n#       payor_id\r\n#       merchant_uid\r\n#     }\r\n#   }\r\n# }\r\n\r\n\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "qa_merchant_uid",
+			"value": "104b4c75-4e0d-4912-b6d7-78cc34e31c60",
+			"type": "string"
+		},
+		{
+			"key": "qa_payor_full_name",
+			"value": "Abel Collins",
+			"type": "string"
+		},
+		{
+			"key": "qa_payor_address_line1",
+			"value": "123 Testing Lane",
+			"type": "string"
+		},
+		{
+			"key": "qa_payor_address_line2",
+			"value": "Apt 29",
+			"type": "string"
+		},
+		{
+			"key": "qa_payor_city",
+			"value": "Cincinnati",
+			"type": "string"
+		},
+		{
+			"key": "qa_payor_country",
+			"value": "USA",
+			"type": "string"
+		},
+		{
+			"key": "qa_payor_email",
+			"value": "abel@PaymentCompany.com",
+			"type": "string"
+		},
+		{
+			"key": "qa_payor_phone",
+			"value": "5135555555",
+			"type": "string"
+		},
+		{
+			"key": "qa_payor_postal_code",
+			"value": "12345",
+			"type": "string"
+		},
+		{
+			"key": "qa_payor_region",
+			"value": "OH",
+			"type": "string"
+		},
+		{
+			"key": "qa_payment_method_id",
+			"value": "ptl_pmt_6VkNsqQ3nJH0Fz50lvedoz (evolve lab)",
+			"type": "string"
+		},
+		{
+			"key": "qa_account_code",
+			"value": "123456",
+			"type": "string"
+		},
+		{
+			"key": "qa_merchant_fee_mode",
+			"value": "MERCHANT_FEE",
+			"type": "string"
+		},
+		{
+			"key": "qa_service_fee_mode",
+			"value": "SERVICE_FEE",
+			"type": "string"
+		},
+		{
+			"key": "qa_receipt_description",
+			"value": "Testing Graphql API",
+			"type": "string"
+		},
+		{
+			"key": "qa_reference",
+			"value": "Test Ref 123",
+			"type": "string"
+		},
+		{
+			"key": "qa_send_receipt",
+			"value": "true",
+			"type": "string"
+		},
+		{
+			"key": "qa_metadata",
+			"value": "{\\\"newmetadata\\\":\\\"test\\\"}",
+			"type": "string"
+		},
+		{
+			"key": "status",
+			"value": ""
+		},
+		{
+			"key": "stage",
+			"value": "carpe"
+		}
+	]
+}
